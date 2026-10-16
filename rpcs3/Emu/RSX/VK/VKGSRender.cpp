@@ -1964,6 +1964,12 @@ bool VKGSRender::load_program()
 		}
 	}
 
+	if (m_program && m_program->value() == VK_NULL_HANDLE)
+	{
+		// Pipeline was rejected by the driver at link time; skip this draw
+		m_program = nullptr;
+	}
+
 	if (m_program)
 	{
 		std::tie(m_vs_binding_table, m_fs_binding_table) = get_binding_table();

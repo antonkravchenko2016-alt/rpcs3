@@ -271,7 +271,14 @@ namespace vk
 			{
 				VkGraphicsPipelineCreateInfo create_info = *p_graphics_info;
 				create_info.layout = m_pipeline_layout;
-				CHECK_RESULT(vkCreateGraphicsPipelines(m_device, pipeline_cache, 1, &create_info, nullptr, &m_pipeline));
+				const VkResult result = vkCreateGraphicsPipelines(m_device, pipeline_cache, 1, &create_info, nullptr, &m_pipeline);
+				if (result != VK_SUCCESS)
+				{
+					// Some drivers (e.g. Qualcomm Adreno X1) reject specific pipelines with VK_ERROR_UNKNOWN.
+					// Do not kill the emulator; leave the pipeline null so draws using it are skipped.
+					rsx_log.error("vkCreateGraphicsPipelines failed with error %d; draws using this pipeline will be skipped", static_cast<int>(result));
+					m_pipeline = VK_NULL_HANDLE;
+				}
 			}
 			else
 			{

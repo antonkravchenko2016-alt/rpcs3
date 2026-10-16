@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - master # Only trigger push event on 'master' branch
+      - adreno-20152
   pull_request:
   workflow_dispatch:
 
@@ -68,7 +69,7 @@ jobs:
   Linux_Build:
     # Only run push event on master branch of main repo, but run all PRs
     needs: Clean_Code_Caches
-    if: github.event_name != 'push' || (github.repository == 'RPCS3/rpcs3' && github.ref_name == 'master')
+    if: false
     strategy:
       fail-fast: false
       matrix:
@@ -162,7 +163,7 @@ jobs:
   Mac_Build:
     # Only run push event on master branch of main repo, but run all PRs
     needs: Clean_Code_Caches
-    if: github.event_name != 'push' || (github.repository == 'RPCS3/rpcs3' && github.ref_name == 'master')
+    if: false
     strategy:
       fail-fast: false
       matrix:
@@ -257,7 +258,7 @@ jobs:
   Windows_Build:
     # Only run push event on master branch of main repo, but run all PRs
     needs: Clean_Code_Caches
-    if: github.event_name != 'push' || (github.repository == 'RPCS3/rpcs3' && github.ref_name == 'master')
+    if: true
     name: RPCS3 Windows
     runs-on: windows-2025-vs2026
     env:
@@ -381,7 +382,7 @@ jobs:
   Windows_Build_Test:
     # Only run push event on master branch of main repo, but run all PRs
     needs: Clean_Code_Caches
-    if: github.event_name != 'push' || (github.repository == 'RPCS3/rpcs3' && github.ref_name == 'master')
+    if: false
     name: RPCS3 Windows Unit Test
     runs-on: windows-2025-vs2026
     env:
@@ -470,7 +471,7 @@ jobs:
   Windows_Build_Clang:
     # Only run push event on master branch of main repo, but run all PRs
     needs: Clean_Code_Caches
-    if: github.event_name != 'push' || (github.repository == 'RPCS3/rpcs3' && github.ref_name == 'master')
+    if: false
     strategy:
       fail-fast: false
       matrix:
@@ -580,7 +581,7 @@ jobs:
   FreeBSD_Build:
       # Only run push event on master branch of main repo, but run all PRs
     needs: Clean_Code_Caches
-    if: github.event_name != 'push' || (github.repository == 'RPCS3/rpcs3' && github.ref_name == 'master')
+    if: false
     name: RPCS3 FreeBSD 
     runs-on: ubuntu-latest
     timeout-minutes: 60
